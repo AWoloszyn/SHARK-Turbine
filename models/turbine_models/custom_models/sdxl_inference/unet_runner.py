@@ -31,10 +31,10 @@ def run_unet(
         ireert.asdevicearray(runner.config.device, prompt_embeds),
         ireert.asdevicearray(runner.config.device, text_embeds),
         ireert.asdevicearray(runner.config.device, time_ids),
-        ireert.asdevicearray(runner.config.device, guidance_scale),
+        #ireert.asdevicearray(runner.config.device, guidance_scale),
     ]
-    results = runner.ctx.modules.compiled_unet["main"](*inputs)
-
+#results = runner.ctx.modules.compiled_unet["main"](*inputs)
+    results = runner.ctx.modules.compiled_unet["run_forward"](*inputs)
     return results
 
 
@@ -116,9 +116,10 @@ if __name__ == "__main__":
     save_inputs = True
 
     sample = torch.rand(
-        args.batch_size, 4, args.height // 8, args.width // 8, dtype=dtype
+        args.batch_size*2, 4, args.height // 8, args.width // 8, dtype=dtype
     )
-    timestep = torch.ones(1, dtype=torch.int64)
+    #timestep = torch.ones(1, dtype=torch.int64)
+    timestep = torch.ones(1, dtype=torch.float16)
     prompt_embeds = torch.rand(2 * args.batch_size, args.max_length, 2048, dtype=dtype)
     text_embeds = torch.rand(2 * args.batch_size, 1280, dtype=dtype)
     time_ids = torch.rand(2 * args.batch_size, 6, dtype=dtype)

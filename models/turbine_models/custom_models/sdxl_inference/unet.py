@@ -236,7 +236,7 @@ if __name__ == "__main__":
         exit()
     safe_name = utils.create_safe_name(
         args.hf_model_name,
-        f"_bs{args.batch_size}_{args.max_length}_{args.height}x{args.width}_{args.precision}_unet",
+        f"_bs{args.batch_size}_{args.max_length}_{args.height}x{args.width}_{args.precision}_unet_debug",
     )
     if args.compile_to != "vmfb":
         with open(f"{safe_name}.mlir", "w+") as f:
